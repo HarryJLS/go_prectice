@@ -14,9 +14,14 @@ func main() {
 	helloService := service.NewHelloService()
 	helloHandler := handler.NewHelloHandler(helloService)
 
+	workerService := service.NewWorkerService()
+	workerHandler := handler.NewWorkerHandler(workerService)
+
 	api := r.Group("/api/v1")
 	{
 		api.GET("/hello", helloHandler.Hello)
+		api.GET("/worker/info", workerHandler.GetWorkerInfo)
+		api.POST("/worker/task", workerHandler.SubmitTask)
 	}
 
 	log.Println("Server starting on :8080")
