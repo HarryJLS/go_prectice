@@ -8,10 +8,10 @@ import (
 )
 
 type HelloHandler struct {
-	helloService service.HelloServiceInterface // 依赖接口
+	helloService service.HelloService // 依赖接口
 }
 
-func NewHelloHandler(helloService service.HelloServiceInterface) *HelloHandler {
+func NewHelloHandler(helloService service.HelloService) *HelloHandler {
 	return &HelloHandler{
 		helloService: helloService,
 	}
