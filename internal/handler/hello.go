@@ -8,10 +8,10 @@ import (
 )
 
 type HelloHandler struct {
-	helloService *service.HelloService
+	helloService service.HelloServiceInterface // 依赖接口
 }
 
-func NewHelloHandler(helloService *service.HelloService) *HelloHandler {
+func NewHelloHandler(helloService service.HelloServiceInterface) *HelloHandler {
 	return &HelloHandler{
 		helloService: helloService,
 	}
@@ -19,9 +19,13 @@ func NewHelloHandler(helloService *service.HelloService) *HelloHandler {
 
 func (h *HelloHandler) Hello(c *gin.Context) {
 	message := h.helloService.GetHelloMessage()
+	demo, err := h.helloService.TestDemo()
+	if err != nil {
+		gin.Logger()
+	}
 	c.JSON(http.StatusOK, gin.H{
 		"code":    200,
 		"message": "success",
-		"data":    message,
+		"data":    message + demo,
 	})
 }
